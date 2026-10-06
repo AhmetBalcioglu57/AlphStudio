@@ -102,6 +102,45 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.07);
         }
 
+        /* Modern Select Style */
+        .custom-select-wrapper {
+            position: relative;
+        }
+        select.custom-select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-color: #08080a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 1rem 3rem 1rem 1.25rem;
+            color: #e2e2e5;
+            font-size: 0.875rem;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c5a880' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1.25rem center;
+            background-size: 1.25rem;
+        }
+        select.custom-select:hover {
+            border-color: rgba(197, 168, 128, 0.4);
+            background-color: #121216;
+        }
+        select.custom-select:focus {
+            outline: none;
+            border-color: #c5a880;
+            box-shadow: 0 0 0 3px rgba(197, 168, 128, 0.15);
+            background-color: #121216;
+        }
+        select.custom-select option {
+            background-color: #121216;
+            color: #e2e2e5;
+            padding: 16px;
+            font-size: 0.875rem;
+        }
+
         .double-shell {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.07);
@@ -176,29 +215,37 @@
             </div>
 
             <!-- Mobile Menu Toggle -->
-            <button id="menuToggle" class="md:hidden text-white text-2xl focus:outline-none">
-                <i class="ri-menu-3-line" id="menuIcon"></i>
+            <button id="menuToggle" aria-label="Menüyü Aç/Kapat" class="md:hidden relative z-50 w-11 h-11 rounded-full border border-white/10 bg-darkCard flex items-center justify-center text-white text-xl focus:outline-none transition-colors duration-300">
+                <i class="ri-menu-3-line transition-transform duration-300" id="menuIcon"></i>
             </button>
         </div>
 
         <!-- Mobile Navigation Menu Overlay -->
-        <div id="mobileMenu" class="fixed inset-0 bg-darkBg/98 backdrop-blur-3xl z-40 flex flex-col items-center justify-center gap-8 opacity-0 pointer-events-none transition-all duration-500 md:hidden">
+        <div id="mobileMenu" class="fixed inset-0 min-h-[100dvh] w-screen bg-darkBg/95 backdrop-blur-2xl z-40 flex flex-col items-center justify-center gap-7 opacity-0 pointer-events-none transition-all duration-500 ease-out md:hidden px-6">
             <a href="#hakkimizda" class="mobile-link font-syne text-2xl uppercase tracking-[0.2em] text-white hover:text-champagne transition-colors">Hakkımızda</a>
             <a href="#hizmetler" class="mobile-link font-syne text-2xl uppercase tracking-[0.2em] text-white hover:text-champagne transition-colors">Hizmetler</a>
             <a href="#ekipmanlar" class="mobile-link font-syne text-2xl uppercase tracking-[0.2em] text-white hover:text-champagne transition-colors">Ekipmanlar</a>
             <a href="#referanslar" class="mobile-link font-syne text-2xl uppercase tracking-[0.2em] text-white hover:text-champagne transition-colors">Referanslar</a>
             <a href="#iletisim" class="mobile-link font-syne text-2xl uppercase tracking-[0.2em] text-white hover:text-champagne transition-colors">İletişim</a>
-            <a href="#iletisim" class="mobile-link mt-4 px-8 py-4 rounded-full bg-champagne text-darkBg text-xs font-bold uppercase tracking-[0.2em]">Stüdyo Randevusu</a>
+            <a href="#iletisim" class="mobile-link mt-4 px-8 py-4 rounded-full bg-champagne text-darkBg text-xs font-bold uppercase tracking-[0.2em] shadow-glow">Stüdyo Randevusu</a>
         </div>
     </header>
 
     <!-- HERO SECTION -->
     <section class="relative min-h-[100dvh] flex items-center justify-center pt-32 pb-20 px-6 overflow-hidden">
-        <!-- Background Ambient Glow & Canvas Visualizer -->
-        <div class="absolute inset-0 pointer-events-none flex items-center justify-center opacity-30">
-            <div class="w-[600px] h-[600px] rounded-full bg-champagne/10 blur-[150px]"></div>
+        <!-- Background Ambient Glow & Layered Aesthetic Mesh -->
+        <div class="absolute inset-0 pointer-events-none flex items-center justify-center">
+            <!-- Center Champagne Radial Glow -->
+            <div class="absolute w-[750px] h-[750px] rounded-full bg-gradient-to-tr from-champagne/15 via-champagne/5 to-transparent blur-[160px] opacity-70"></div>
+            <!-- Secondary Ambient Hue (Titanium & Warm Glow) -->
+            <div class="absolute -top-24 right-1/4 w-[500px] h-[500px] rounded-full bg-champagne/10 blur-[140px] opacity-40"></div>
+            <div class="absolute -bottom-24 left-1/4 w-[500px] h-[500px] rounded-full bg-white/[0.03] blur-[120px] opacity-50"></div>
+            <!-- Subtle Radial Vignette & Grid Line Accent -->
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(197,168,128,0.15),rgba(255,255,255,0))]"></div>
+            <div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
         </div>
-        <canvas id="heroCanvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-25"></canvas>
+
+        <canvas id="heroCanvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-40"></canvas>
 
         <div class="max-w-5xl mx-auto text-center relative z-10">
             <!-- Eyebrow Badge -->
@@ -754,13 +801,15 @@
 
                                 <div>
                                     <label class="block text-xs uppercase tracking-[0.2em] text-cream/70 mb-2 font-medium">Hizmet Türü</label>
-                                    <select class="w-full bg-darkBg border border-white/10 rounded-xl px-5 py-4 text-white text-sm focus:outline-none focus:border-champagne transition-colors">
-                                        <option value="production">Müzik Prodüksiyonu & Aranje</option>
-                                        <option value="mix">Mix & Mastering (Dolby Atmos & Stereo)</option>
-                                        <option value="sounddesign">Ses Tasarımı & Foly</option>
-                                        <option value="vocal">Vokal Edit & Tuning</option>
-                                        <option value="corporate">Reklam & Kurumsal Ses Kimliği</option>
-                                    </select>
+                                    <div class="custom-select-wrapper">
+                                        <select class="custom-select">
+                                            <option value="production">Müzik Prodüksiyonu & Aranje</option>
+                                            <option value="mix">Mix & Mastering (Dolby Atmos & Stereo)</option>
+                                            <option value="sounddesign">Ses Tasarımı & Foly</option>
+                                            <option value="vocal">Vokal Edit & Tuning</option>
+                                            <option value="corporate">Reklam & Kurumsal Ses Kimliği</option>
+                                        </select>
+                                    </div>
                                 </div>
 
                                 <div>
@@ -899,7 +948,7 @@
             ScrollTrigger.refresh();
         });
 
-        // Hero Audio Canvas Visualizer
+        // Hero Audio Canvas Visualizer (3 Layer Harmonic Waves with Dynamic Curves)
         const canvas = document.getElementById('heroCanvas');
         const ctx = canvas.getContext('2d');
         function resizeCanvas() {
@@ -912,24 +961,63 @@
         let wavePhase = 0;
         function drawVisualizer() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.beginPath();
-            ctx.lineWidth = 1.5;
-            ctx.strokeStyle = 'rgba(197, 168, 128, 0.25)';
 
-            const centerY = canvas.height * 0.65;
-            const points = 120;
+            // 3-layer wave configuration (Warm bronze/champagne gradient look, distinct frequencies)
+            const waves = [
+                {
+                    color: 'rgba(197, 168, 128, 0.28)',
+                    lineWidth: 1.8,
+                    freq: 0.08,
+                    speed: 0.018,
+                    offset: 0,
+                    amp: 55,
+                    verticalShift: 0
+                },
+                {
+                    color: 'rgba(223, 199, 165, 0.18)',
+                    lineWidth: 1.2,
+                    freq: 0.12,
+                    speed: 0.025,
+                    offset: 2.1,
+                    amp: 42,
+                    verticalShift: -15
+                },
+                {
+                    color: 'rgba(197, 168, 128, 0.10)',
+                    lineWidth: 1.0,
+                    freq: 0.05,
+                    speed: 0.012,
+                    offset: 4.2,
+                    amp: 68,
+                    verticalShift: 15
+                }
+            ];
+
+            const centerY = canvas.height * 0.62;
+            const points = 140;
             const slice = canvas.width / points;
 
-            for (let i = 0; i <= points; i++) {
-                const x = i * slice;
-                const distanceCenter = Math.abs(i - points / 2) / (points / 2);
-                const factor = Math.max(0, 1 - distanceCenter);
-                const y = centerY + Math.sin(i * 0.1 + wavePhase) * Math.cos(i * 0.05 + wavePhase * 0.5) * 60 * factor;
+            waves.forEach(wave => {
+                ctx.beginPath();
+                ctx.lineWidth = wave.lineWidth;
+                ctx.strokeStyle = wave.color;
 
-                if (i === 0) ctx.moveTo(x, y);
-                else ctx.lineTo(x, y);
-            }
-            ctx.stroke();
+                for (let i = 0; i <= points; i++) {
+                    const x = i * slice;
+                    // Bell-curve envelope to softly focus waves in the center and fade out gracefully at edges
+                    const normalizedX = (i / points) * 2 - 1; // -1 to 1
+                    const envelope = Math.exp(-Math.pow(normalizedX * 1.8, 2));
+
+                    const angle = i * wave.freq + wavePhase * wave.speed * 40 + wave.offset;
+                    const harmonic = Math.sin(angle) * Math.cos(angle * 0.45);
+                    const y = centerY + wave.verticalShift + harmonic * wave.amp * envelope;
+
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+            });
+
             wavePhase += 0.025;
             requestAnimationFrame(drawVisualizer);
         }
@@ -942,18 +1030,27 @@
         const mobileLinks = document.querySelectorAll('.mobile-link');
 
         let isMenuOpen = false;
-        menuToggle.addEventListener('click', () => {
+
+        // Helper to toggle body scroll
+        const toggleScroll = (lock) => {
+            document.body.style.overflow = lock ? 'hidden' : '';
+        };
+
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
             isMenuOpen = !isMenuOpen;
             if (isMenuOpen) {
                 mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
                 mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
-                menuIcon.className = 'ri-close-line';
-                document.body.style.overflow = 'hidden';
+                menuIcon.classList.remove('ri-menu-3-line');
+                menuIcon.classList.add('ri-close-line');
+                toggleScroll(true);
             } else {
                 mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
                 mobileMenu.classList.add('opacity-0', 'pointer-events-none');
-                menuIcon.className = 'ri-menu-3-line';
-                document.body.style.overflow = '';
+                menuIcon.classList.remove('ri-close-line');
+                menuIcon.classList.add('ri-menu-3-line');
+                toggleScroll(false);
             }
         });
 
@@ -962,8 +1059,9 @@
                 isMenuOpen = false;
                 mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
                 mobileMenu.classList.add('opacity-0', 'pointer-events-none');
-                menuIcon.className = 'ri-menu-3-line';
-                document.body.style.overflow = '';
+                menuIcon.classList.remove('ri-close-line');
+                menuIcon.classList.add('ri-menu-3-line');
+                toggleScroll(false);
             });
         });
 
