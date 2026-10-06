@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALPH STUDIO — Müzik & Ses Prodüksiyon Stüdyosu</title>
+
+    <!-- Google Fonts: Playfair Display (Başlıklar) & Montserrat (Gövde) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Remix Icons for ultra-light precise icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!-- Lenis Smooth Scroll CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.css">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#08080a',
+                        darkCard: '#121216',
+                        darkCardHover: '#18181d',
+                        champagne: '#c5a880',
+                        champagneLight: '#dfc7a5',
+                        titanium: '#2a2d34',
+                        cream: '#e2e2e5',
+                        borderSubtle: 'rgba(255, 255, 255, 0.07)'
+                    },
+                    fontFamily: {
+                        syne: ['Playfair Display', 'serif'],
+                        sans: ['Montserrat', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'double': 'inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 20px 40px -15px rgba(0, 0, 0, 0.7)',
+                        'glow': '0 0 50px -10px rgba(197, 168, 128, 0.15)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #08080a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a2d34;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c5a880;
+        }
+
+        body {
+            background-color: #08080a;
+            color: #e2e2e5;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            selection-background-color: #c5a880;
+            selection-color: #08080a;
+        }
+
+        ::selection {
+            background: #c5a880;
+            color: #08080a;
+        }
+
+        .font-syne{
+            font-family: 'Syne', sans-serif !important;
+        }
+
+        /* Noise overlay */
+        .noise-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            content: "";
+            opacity: 0.028;
+            pointer-events: none;
+            z-index: 999;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .glass-nav {
+            background: rgba(8, 8, 10, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .double-shell {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 2rem;
+            padding: 0.75rem;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .double-shell:hover {
+            border-color: rgba(197, 168, 128, 0.3);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(197, 168, 128, 0.05);
+        }
+
+        .double-core {
+            background: #121216;
+            border-radius: calc(2rem - 0.5rem);
+            padding: 2.5rem;
+            height: 100%;
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #ffffff 0%, #c5a880 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .audio-wave-bar {
+            width: 3px;
+            background: #c5a880;
+            animation: soundWave 1.2s ease-in-out infinite alternate;
+        }
+        @keyframes soundWave {
+            0% { height: 6px; opacity: 0.3; }
+            100% { height: 36px; opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-darkBg text-cream antialiased">
+
+    <div class="noise-bg"></div>
+
+    <!-- HEADER / NAVBAR -->
+    <header class="fixed top-0 left-0 w-full z-50 glass-nav transition-all duration-500" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-full border border-champagne/40 flex items-center justify-center bg-darkCard transition-transform duration-500 group-hover:rotate-180">
+                    <span class="w-3 h-3 rounded-full bg-champagne"></span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-syne font-bold text-xl tracking-[0.2em] text-white">Alph Studio</span>
+                    <span class="text-[9px] tracking-[0.3em] uppercase text-champagne">Sound & Music Studio</span>
+                </div>
+            </a>
+
+            <!-- Navigation Links (Desktop) -->
+            <nav class="hidden md:flex items-center gap-8">
+                <a href="#hakkimizda" class="text-xs uppercase tracking-[0.2em] text-cream/70 hover:text-champagne transition-colors duration-300">Hakkımızda</a>
+                <a href="#hizmetler" class="text-xs uppercase tracking-[0.2em] text-cream/70 hover:text-champagne transition-colors duration-300">Hizmetler</a>
+                <a href="#ekipmanlar" class="text-xs uppercase tracking-[0.2em] text-cream/70 hover:text-champagne transition-colors duration-300">Ekipmanlar</a>
+                <a href="#referanslar" class="text-xs uppercase tracking-[0.2em] text-cream/70 hover:text-champagne transition-colors duration-300">Referanslar</a>
+                <a href="#iletisim" class="text-xs uppercase tracking-[0.2em] text-cream/70 hover:text-champagne transition-colors duration-300">İletişim</a>
+            </nav>
+
+            <!-- CTA Button -->
+            <div class="hidden md:flex items-center gap-4">
+                <a href="#iletisim" class="group relative inline-flex items-center gap-4 px-7 py-3 rounded-full bg-darkCard border border-white/10 text-xs font-semibold uppercase tracking-[0.2em] text-white overflow-hidden transition-all duration-500 hover:border-champagne/50 hover:bg-darkCardHover">
+                    <span class="relative z-10">Stüdyo Randevusu</span>
+                    <div class="w-7 h-7 rounded-full bg-champagne/10 flex items-center justify-center transition-transform duration-500 group-hover:translate-x-1 group-hover:bg-champagne group-hover:text-darkBg text-champagne">
+                        <i class="ri-arrow-right-up-line text-sm"></i>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="menuToggle" class="md:hidden text-white text-2xl focus:outline-none">
+                <i class="ri-menu-3-line" id="menuIcon"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Menu Overlay -->
+        <div id="mobileMenu" class="fixed inset-0 bg-darkBg/98 backdrop-blur-3xl z-40 flex flex-col items-center justify-center gap-8 opacity-0 pointer-events-none transition-all duration-500 md:hidden">
+            <a href="#hakkimizda" class="mobile-link font-syne text-2xl uppercase tracking-[0.2em] text-white hover:text-champagne transition-colors">Hakkımızda</a>
+            <a href="#hizmetler" class="mobile-link font-syne text-2xl uppercase tracking-[0.2em] text-white hover:text-champagne transition-colors">Hizmetler</a>
+            <a href="#ekipmanlar" class="mobile-link font-syne text-2xl uppercase tracking-[0.2em] text-white hover:text-champagne transition-colors">Ekipmanlar</a>
+            <a href="#referanslar" class="mobile-link font-syne text-2xl uppercase tracking-[0.2em] text-white hover:text-champagne transition-colors">Referanslar</a>
+            <a href="#iletisim" class="mobile-link font-syne text-2xl uppercase tracking-[0.2em] text-white hover:text-champagne transition-colors">İletişim</a>
+            <a href="#iletisim" class="mobile-link mt-4 px-8 py-4 rounded-full bg-champagne text-darkBg text-xs font-bold uppercase tracking-[0.2em]">Stüdyo Randevusu</a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative min-h-[100dvh] flex items-center justify-center pt-32 pb-20 px-6 overflow-hidden">
+        <!-- Background Ambient Glow & Canvas Visualizer -->
+        <div class="absolute inset-0 pointer-events-none flex items-center justify-center opacity-30">
+            <div class="w-[600px] h-[600px] rounded-full bg-champagne/10 blur-[150px]"></div>
+        </div>
+        <canvas id="heroCanvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-25"></canvas>
+
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <!-- Eyebrow Badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/10 mb-8 animate-fade-in">
+                <span class="w-2 h-2 rounded-full bg-champagne animate-pulse"></span>
+                <span class="text-[10px] uppercase tracking-[0.3em] font-medium text-champagne">Akustik Mükemmeliyet & Ses Sanatı</span>
+            </div>
+
+            <!-- Main Title -->
+            <h1 class="font-syne text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-white mb-8 leading-[1.05]">
+                SESİN EN YÜKSEK <br/>
+                <span class="text-gradient">FORMU</span>
+            </h1>
+
+            <!-- Spot text -->
+            <p class="max-w-2xl mx-auto text-base sm:text-lg text-cream/70 font-normal leading-relaxed mb-12">
+                Alph Studio, dünya standartlarındaki akustik mimarisi, son teknoloji analog konsolları ve vizyoner ses mühendisleriyle markalar, sinema ve sanatçılar için kusursuz işitsel evrenler inşa eder.
+            </p>
+
+            <!-- Action buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+                <a href="#referanslar" class="w-full sm:w-auto px-8 py-4 rounded-full bg-champagne text-darkBg font-semibold text-xs uppercase tracking-[0.2em] transition-all duration-500 hover:bg-champagneLight shadow-glow">
+                    Seçkin Çalışmaları Keşfet
+                </a>
+                <a href="#iletisim" class="w-full sm:w-auto group inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-darkCard border border-white/10 text-white font-semibold text-xs uppercase tracking-[0.2em] transition-all duration-500 hover:border-champagne/50">
+                    <span>Projenizi Görüşelim</span>
+                    <i class="ri-arrow-right-line transition-transform duration-300 group-hover:translate-x-1 text-champagne"></i>
+                </a>
+            </div>
+
+            <!-- Live audio visualizer bars decorative -->
+            <div class="mt-20 flex items-center justify-center gap-1.5 opacity-60">
+                <div class="audio-wave-bar" style="animation-delay: 0.1s;"></div>
+                <div class="audio-wave-bar" style="animation-delay: 0.3s;"></div>
+                <div class="audio-wave-bar" style="animation-delay: 0.5s;"></div>
+                <div class="audio-wave-bar" style="animation-delay: 0.2s;"></div>
+                <div class="audio-wave-bar" style="animation-delay: 0.4s;"></div>
+                <div class="audio-wave-bar" style="animation-delay: 0.6s;"></div>
+                <div class="audio-wave-bar" style="animation-delay: 0.1s;"></div>
+                <div class="audio-wave-bar" style="animation-delay: 0.4s;"></div>
+                <div class="audio-wave-bar" style="animation-delay: 0.2s;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HAKKIMIZDA & MİSYON -->
+    <section id="hakkimizda" class="py-32 px-6 relative border-t border-borderSubtle">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                <!-- Left Title & Eyebrow -->
+                <div class="lg:col-span-5">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/10 mb-6">
+                        <span class="text-[10px] uppercase tracking-[0.2em] text-champagne">Felsefemiz</span>
+                    </div>
+                    <h2 class="font-syne text-4xl sm:text-5xl font-bold text-white leading-tight mb-6">
+                        Akustikte Sınırları Kaldıran Bir Deneyim.
+                    </h2>
+                    <p class="text-cream/70 leading-relaxed text-base mb-8">
+                        Beş yılı aşkın süredir sanatçılara, reklam ajanslarına ve film yapımcılarına uluslararası standartlarda akustik ve dijital ses çözümleri sunuyoruz. Her frekansta en saf duyguya ulaşmayı hedefleriz.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full border border-champagne/30 flex items-center justify-center text-champagne font-syne font-bold text-lg">
+                            01
+                        </div>
+                        <span class="text-xs uppercase tracking-[0.2em] text-white font-medium">Bütünsel Ses Mühendisliği</span>
+                    </div>
+                </div>
+
+                <!-- Right Stats Bento -->
+                <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="double-shell">
+                        <div class="double-core flex flex-col justify-between">
+                            <span class="font-syne text-4xl sm:text-5xl font-bold text-champagne mb-4">+150</span>
+                            <div>
+                                <h3 class="text-white font-semibold text-base mb-1">Tamamlanan Proje</h3>
+                                <p class="text-cream/60 text-sm">Uluslararası albüm, sinema filmi ve global reklam kampanyası.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="double-shell">
+                        <div class="double-core flex flex-col justify-between">
+                            <span class="font-syne text-4xl sm:text-5xl font-bold text-champagne mb-4">3 Odak</span>
+                            <div>
+                                <h3 class="text-white font-semibold text-base mb-1">Akustik İzolasyonlu Odalar</h3>
+                                <p class="text-cream/60 text-sm">NC-15 değerine sahip, mutlak sessizlik sunan floating room mimarisi.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="double-shell">
+                        <div class="double-core flex flex-col justify-between">
+                            <span class="font-syne text-4xl sm:text-5xl font-bold text-champagne mb-4">%100</span>
+                            <div>
+                                <h3 class="text-white font-semibold text-base mb-1">Ticari Standart</h3>
+                                <p class="text-cream/60 text-sm">Dolby Atmos sertifikalı mix ve mastering altyapısı.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="double-shell">
+                        <div class="double-core flex flex-col justify-between">
+                            <span class="font-syne text-4xl sm:text-5xl font-bold text-champagne mb-4">24/7</span>
+                            <div>
+                                <h3 class="text-white font-semibold text-base mb-1">Özel Prodüksiyon Desteği</h3>
+                                <p class="text-cream/60 text-sm">Süreç boyunca kesintisiz danışmanlık ve revizyon imkanı.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HİZMETLERİMİZ (Interactive List / Accordion) -->
+    <section id="hizmetler" class="py-32 px-6 relative border-t border-borderSubtle bg-[#0a0a0c]">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-20">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/10 mb-6">
+                    <span class="text-[10px] uppercase tracking-[0.2em] text-champagne">Uzmanlık Alanlarımız</span>
+                </div>
+                <h2 class="font-syne text-4xl sm:text-5xl font-bold text-white mb-6">Hizmetlerimiz</h2>
+                <p class="text-cream/70 text-base">Her projeye özel olarak tasarlanmış, en yüksek akustik ve dijital hassasiyetle sunulan profesyonel çözümlerimiz.</p>
+            </div>
+
+            <!-- Accordion Container -->
+            <div class="space-y-4" id="servicesAccordion">
+
+                <!-- Service 1 -->
+                <div class="service-item border border-white/10 rounded-2xl bg-darkCard overflow-hidden transition-all duration-500 hover:border-champagne/40">
+                    <button class="w-full px-8 py-7 flex items-center justify-between text-left focus:outline-none service-btn">
+                        <div class="flex items-center gap-6">
+                            <span class="font-syne text-champagne text-lg font-bold">01</span>
+                            <span class="font-syne text-xl sm:text-2xl font-semibold text-white">Müzik Prodüksiyonu & Aranje</span>
+                        </div>
+                        <div class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-champagne transition-transform duration-500 service-icon">
+                            <i class="ri-add-line text-lg"></i>
+                        </div>
+                    </button>
+                    <div class="service-content max-h-0 overflow-hidden transition-all duration-700 px-8 text-cream/70 text-base leading-relaxed">
+                        <div class="pb-8 pt-2 grid grid-cols-1 md:grid-cols-2 gap-8 items-center border-t border-white/5">
+                            <p>Sanatçıların ve markaların vizyonunu en güçlü melodi ve armonilerle buluşturuyoruz. Taslak halindeki fikirlerden stüdyo kayıtlarına, zengin enstrümantasyon ve profesyonel aranjman süreçleriyle kusursuz eserler ortaya çıkarıyoruz.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-champagne">Özgün Besteleme</span>
+                                <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-champagne">Enstrüman Kaydı</span>
+                                <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-champagne">Orkestrasyon</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="service-item border border-white/10 rounded-2xl bg-darkCard overflow-hidden transition-all duration-500 hover:border-champagne/40">
+                    <button class="w-full px-8 py-7 flex items-center justify-between text-left focus:outline-none service-btn">
+                        <div class="flex items-center gap-6">
+                            <span class="font-syne text-champagne text-lg font-bold">02</span>
+                            <span class="font-syne text-xl sm:text-2xl font-semibold text-white">Mix & Mastering (Dolby Atmos & Stereo)</span>
+                        </div>
+                        <div class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-champagne transition-transform duration-500 service-icon">
+                            <i class="ri-add-line text-lg"></i>
+                        </div>
+                    </button>
+                    <div class="service-content max-h-0 overflow-hidden transition-all duration-700 px-8 text-cream/70 text-base leading-relaxed">
+                        <div class="pb-8 pt-2 grid grid-cols-1 md:grid-cols-2 gap-8 items-center border-t border-white/5">
+                            <p>Analog sıcaklığı dijital hassasiyetle birleştiriyoruz. Sektör standardı SSL ve Neve donanımlarla her kanalın dengesini kuruyor, Dolby Atmos uzamsal ses teknolojisiyle dinleyicilere üç boyutlu bir işitsel şölen sunuyoruz.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-champagne">Dolby Atmos</span>
+                                <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-champagne">Analog Summing</span>
+                                <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-champagne">Mastering</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="service-item border border-white/10 rounded-2xl bg-darkCard overflow-hidden transition-all duration-500 hover:border-champagne/40">
+                    <button class="w-full px-8 py-7 flex items-center justify-between text-left focus:outline-none service-btn">
+                        <div class="flex items-center gap-6">
+                            <span class="font-syne text-champagne text-lg font-bold">03</span>
+                            <span class="font-syne text-xl sm:text-2xl font-semibold text-white">Ses Tasarımı & Foly (Oyun ve Sinema)</span>
+                        </div>
+                        <div class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-champagne transition-transform duration-500 service-icon">
+                            <i class="ri-add-line text-lg"></i>
+                        </div>
+                    </button>
+                    <div class="service-content max-h-0 overflow-hidden transition-all duration-700 px-8 text-cream/70 text-base leading-relaxed">
+                        <div class="pb-8 pt-2 grid grid-cols-1 md:grid-cols-2 gap-8 items-center border-t border-white/5">
+                            <p>Görsel dünyalara ruh katan özel ses efektleri, foly kayıtları ve sinematik ses manzaraları üretiyoruz. Oyun motorları ve film projeleri için eşsiz akustik atmosferler inşa ediyoruz.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-champagne">Foly Sanatı</span>
+                                <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-champagne">Sound Design</span>
+                                <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-champagne">Sinematik Mix</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="service-item border border-white/10 rounded-2xl bg-darkCard overflow-hidden transition-all duration-500 hover:border-champagne/40">
+                    <button class="w-full px-8 py-7 flex items-center justify-between text-left focus:outline-none service-btn">
+                        <div class="flex items-center gap-6">
+                            <span class="font-syne text-champagne text-lg font-bold">04</span>
+                            <span class="font-syne text-xl sm:text-2xl font-semibold text-white">Vokal Edit, Pitch Correction & Tuning</span>
+                        </div>
+                        <div class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-champagne transition-transform duration-500 service-icon">
+                            <i class="ri-add-line text-lg"></i>
+                        </div>
+                    </button>
+                    <div class="service-content max-h-0 overflow-hidden transition-all duration-700 px-8 text-cream/70 text-base leading-relaxed">
+                        <div class="pb-8 pt-2 grid grid-cols-1 md:grid-cols-2 gap-8 items-center border-t border-white/5">
+                            <p>Vokal performanslarının doğal duyarlılığını koruyarak en üst düzey kusursuzluğa ulaştırıyoruz. Melodyne ve Antares sistemleriyle hassas akort ve nefes düzenlemeleri gerçekleştiriyoruz.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-champagne">Vokal Tuning</span>
+                                <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-champagne">Hassas Edit</span>
+                                <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-champagne">Harmoni Üretimi</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="service-item border border-white/10 rounded-2xl bg-darkCard overflow-hidden transition-all duration-500 hover:border-champagne/40">
+                    <button class="w-full px-8 py-7 flex items-center justify-between text-left focus:outline-none service-btn">
+                        <div class="flex items-center gap-6">
+                            <span class="font-syne text-champagne text-lg font-bold">05</span>
+                            <span class="font-syne text-xl sm:text-2xl font-semibold text-white">Reklam & Kurumsal Ses Kimliği</span>
+                        </div>
+                        <div class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-champagne transition-transform duration-500 service-icon">
+                            <i class="ri-add-line text-lg"></i>
+                        </div>
+                    </button>
+                    <div class="service-content max-h-0 overflow-hidden transition-all duration-700 px-8 text-cream/70 text-base leading-relaxed">
+                        <div class="pb-8 pt-2 grid grid-cols-1 md:grid-cols-2 gap-8 items-center border-t border-white/5">
+                            <p>Global markaların akustik kimliğini tasarlıyoruz. Akılda kalıcı jingle'lar, marka imzaları ve reklam filmleri için yüksek etkili müzikal altyapılar hazırlıyoruz.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-champagne">Jingle Tasarımı</span>
+                                <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-champagne">Sonic Branding</span>
+                                <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-champagne">Seslendirme Cast</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- TEKNİK EKİPMANLAR (Studio Gear) -->
+    <section id="ekipmanlar" class="py-32 px-6 relative border-t border-borderSubtle">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-20">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/10 mb-6">
+                    <span class="text-[10px] uppercase tracking-[0.2em] text-champagne">Donanım Altyapısı</span>
+                </div>
+                <h2 class="font-syne text-4xl sm:text-5xl font-bold text-white mb-6">Teknik Ekipmanlar</h2>
+                <p class="text-cream/70 text-base">Endüstrinin en prestijli analog ve dijital donanımlarıyla donatılmış stüdyo parkurumuz.</p>
+            </div>
+
+            <!-- Tabs Navigation -->
+            <div class="flex flex-wrap items-center justify-center gap-3 mb-12">
+                <button class="gear-tab px-6 py-3 rounded-full text-xs uppercase tracking-[0.2em] font-semibold transition-all duration-300 bg-champagne text-darkBg" data-target="mics">Mikrofonlar & Preamplar</button>
+                <button class="gear-tab px-6 py-3 rounded-full text-xs uppercase tracking-[0.2em] font-semibold transition-all duration-300 bg-darkCard text-cream/70 border border-white/10 hover:text-white" data-target="monitoring">Dinleme & İzleme</button>
+                <button class="gear-tab px-6 py-3 rounded-full text-xs uppercase tracking-[0.2em] font-semibold transition-all duration-300 bg-darkCard text-cream/70 border border-white/10 hover:text-white" data-target="analog">Analog İşlemciler</button>
+                <button class="gear-tab px-6 py-3 rounded-full text-xs uppercase tracking-[0.2em] font-semibold transition-all duration-300 bg-darkCard text-cream/70 border border-white/10 hover:text-white" data-target="daw">Yazılım & DAW</button>
+            </div>
+
+            <!-- Tabs Content -->
+            <div id="gearContents">
+                <!-- Group 1: Mics -->
+                <div class="gear-panel grid grid-cols-1 md:grid-cols-3 gap-8" id="mics">
+                    <div class="double-shell">
+                        <div class="double-core">
+                            <span class="text-xs uppercase tracking-[0.2em] text-champagne mb-2 block">Tüp Mikrofon</span>
+                            <h3 class="font-syne text-xl font-bold text-white mb-3">Neumann U87 Ai & U67</h3>
+                            <p class="text-cream/60 text-sm">Vokal ve akustik enstrüman kayıtlarında kusursuz detay ve sıcaklık sunan efsanevi kondenserler.</p>
+                        </div>
+                    </div>
+                    <div class="double-shell">
+                        <div class="double-core">
+                            <span class="text-xs uppercase tracking-[0.2em] text-champagne mb-2 block">Preamplifier</span>
+                            <h3 class="font-syne text-xl font-bold text-white mb-3">Universal Audio 6176</h3>
+                            <p class="text-cream/60 text-sm">Tube preamp ve 1100LN kompresörün birleşimiyle rakipsiz analog doygunluk ve karakter.</p>
+                        </div>
+                    </div>
+                    <div class="double-shell">
+                        <div class="double-core">
+                            <span class="text-xs uppercase tracking-[0.2em] text-champagne mb-2 block">Ribbon Mikrofon</span>
+                            <h3 class="font-syne text-xl font-bold text-white mb-3">Royer R-121</h3>
+                            <p class="text-cream/60 text-sm">Gitar kabinleri ve yaylı kayıtlarında ipeksi, doğal ve yumuşak frekans tepkisi.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group 2: Monitoring -->
+                <div class="gear-panel hidden grid grid-cols-1 md:grid-cols-3 gap-8" id="monitoring">
+                    <div class="double-shell">
+                        <div class="double-core">
+                            <span class="text-xs uppercase tracking-[0.2em] text-champagne mb-2 block">Ana Referans</span>
+                            <h3 class="font-syne text-xl font-bold text-white mb-3">Focal Trio6 Be</h3>
+                            <p class="text-cream/60 text-sm">Olağanüstü şeffaflık, dinamik kontrol ve nokta atışı frekans ayrımı sağlayan stüdyo monitörleri.</p>
+                        </div>
+                    </div>
+                    <div class="double-shell">
+                        <div class="double-core">
+                            <span class="text-xs uppercase tracking-[0.2em] text-champagne mb-2 block">Nearfield Monitor</span>
+                            <h3 class="font-syne text-xl font-bold text-white mb-3">Yamaha NS-10M Studio</h3>
+                            <p class="text-cream/60 text-sm">Mix dünyasının endüstri standardı referans hoparlörü; vokal ve orta frekans doğruluğu.</p>
+                        </div>
+                    </div>
+                    <div class="double-shell">
+                        <div class="double-core">
+                            <span class="text-xs uppercase tracking-[0.2em] text-champagne mb-2 block">Referans Kulaklık</span>
+                            <h3 class="font-syne text-xl font-bold text-white mb-3">Sennheiser HD 800 S</h3>
+                            <p class="text-cream/60 text-sm">Geniş akustik alan ve kusursuz detay hassasiyeti sunan üst düzey açık kulaklık sistemi.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group 3: Analog -->
+                <div class="gear-panel hidden grid grid-cols-1 md:grid-cols-3 gap-8" id="analog">
+                    <div class="double-shell">
+                        <div class="double-core">
+                            <span class="text-xs uppercase tracking-[0.2em] text-champagne mb-2 block">Mixing Console</span>
+                            <h3 class="font-syne text-xl font-bold text-white mb-3">Solid State Logic AWS 948</h3>
+                            <p class="text-cream/60 text-sm">Efsanevi SSL analog summing ve DAW entegrasyonunu birleştiren üst düzey konsol.</p>
+                        </div>
+                    </div>
+                    <div class="double-shell">
+                        <div class="double-core">
+                            <span class="text-xs uppercase tracking-[0.2em] text-champagne mb-2 block">Tube Compressor</span>
+                            <h3 class="font-syne text-xl font-bold text-white mb-3">Manley Variable Mu</h3>
+                            <p class="text-cream/60 text-sm">Mastering ve mix bus işlemlerinde benzersiz müzikalite ve sıcaklık katan tüplü kompresör.</p>
+                        </div>
+                    </div>
+                    <div class="double-shell">
+                        <div class="double-core">
+                            <span class="text-xs uppercase tracking-[0.2em] text-champagne mb-2 block">EQ Hardware</span>
+                            <h3 class="font-syne text-xl font-bold text-white mb-3">Pultec EQP-1A</h3>
+                            <p class="text-cream/60 text-sm">Efsanevi tüplü ekolayzır ile bas ve tizlerde ipeksi, dolgun ve karakteristik dokunuşlar.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group 4: DAW -->
+                <div class="gear-panel hidden grid grid-cols-1 md:grid-cols-3 gap-8" id="daw">
+                    <div class="double-shell">
+                        <div class="double-core">
+                            <span class="text-xs uppercase tracking-[0.2em] text-champagne mb-2 block">Pro DAW</span>
+                            <h3 class="font-syne text-xl font-bold text-white mb-3">Pro Tools Ultimate HDX</h3>
+                            <p class="text-cream/60 text-sm">DSP destekli sıfır gecikme ve endüstri standardı kayıt/editing altyapısı.</p>
+                        </div>
+                    </div>
+                    <div class="double-shell">
+                        <div class="double-core">
+                            <span class="text-xs uppercase tracking-[0.2em] text-champagne mb-2 block">Production DAW</span>
+                            <h3 class="font-syne text-xl font-bold text-white mb-3">Logic Pro & Ableton Live</h3>
+                            <p class="text-cream/60 text-sm">Modern aranjman, elektronik müzik üretimi ve yaratıcı ses tasarımı için en üst düzey yazılımlar.</p>
+                        </div>
+                    </div>
+                    <div class="double-shell">
+                        <div class="double-core">
+                            <span class="text-xs uppercase tracking-[0.2em] text-champagne mb-2 block">Plugin Suite</span>
+                            <h3 class="font-syne text-xl font-bold text-white mb-3">UAD Ultimate & FabFilter</h3>
+                            <p class="text-cream/60 text-sm">Dinamik kontrol ve frekans analizi için dünyanın en gelişmiş plugin koleksiyonu.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇKİN ÇALIŞMALAR & REFERANSLAR -->
+    <section id="referanslar" class="py-32 px-6 relative border-t border-borderSubtle bg-[#0a0a0c]">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-20">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/10 mb-6">
+                    <span class="text-[10px] uppercase tracking-[0.2em] text-champagne">İşitsel Portfolyo</span>
+                </div>
+                <h2 class="font-syne text-4xl sm:text-5xl font-bold text-white mb-6">Seçkin Çalışmalar</h2>
+                <p class="text-cream/70 text-base">Stüdyomuzda kaydedilen, mixlenen ve masterlanan ödüllü albüm ve sinematik projelerden seçkiler.</p>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Project Card 1 -->
+                <div class="double-shell group">
+                    <div class="double-core flex flex-col justify-between h-[360px] relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-transparent to-transparent opacity-60 z-10"></div>
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(197,168,128,0.15),transparent_50%)]"></div>
+
+                        <!-- Top Info -->
+                        <div class="relative z-20 flex items-center justify-between">
+                            <span class="text-xs uppercase tracking-[0.2em] text-champagne">Sinematik Film Müziği</span>
+                            <span class="text-xs text-cream/50 font-mono">2026</span>
+                        </div>
+
+                        <!-- Center Play Button & Title -->
+                        <div class="relative z-20 my-auto text-center">
+                            <button class="w-16 h-16 rounded-full bg-champagne text-darkBg flex items-center justify-center mx-auto mb-4 transition-transform duration-500 group-hover:scale-110 shadow-glow play-sim-btn" data-title="Karanlık Ufuklar O.S.T.">
+                                <i class="ri-play-fill text-2xl ml-1"></i>
+                            </button>
+                            <h3 class="font-syne text-2xl font-bold text-white mb-1">Karanlık Ufuklar O.S.T.</h3>
+                            <p class="text-cream/60 text-sm">Netflix Global Sinema Prodüksiyonu</p>
+                        </div>
+
+                        <!-- Bottom Audio Wave Simulation -->
+                        <div class="relative z-20 flex items-center justify-between pt-6 border-t border-white/5">
+                            <div class="flex items-center gap-1 h-6">
+                                <span class="w-1 h-3 bg-champagne/60 rounded-full animate-pulse"></span>
+                                <span class="w-1 h-6 bg-champagne rounded-full animate-pulse" style="animation-delay: 0.2s;"></span>
+                                <span class="w-1 h-4 bg-champagne/80 rounded-full animate-pulse" style="animation-delay: 0.4s;"></span>
+                                <span class="w-1 h-5 bg-champagne rounded-full animate-pulse" style="animation-delay: 0.1s;"></span>
+                                <span class="w-1 h-2 bg-champagne/40 rounded-full animate-pulse" style="animation-delay: 0.3s;"></span>
+                            </div>
+                            <span class="text-xs text-champagne uppercase tracking-widest font-mono">03:45</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="double-shell group">
+                    <div class="double-core flex flex-col justify-between h-[360px] relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-transparent to-transparent opacity-60 z-10"></div>
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(197,168,128,0.15),transparent_50%)]"></div>
+
+                        <div class="relative z-20 flex items-center justify-between">
+                            <span class="text-xs uppercase tracking-[0.2em] text-champagne">Elektronik / Ambient Albüm</span>
+                            <span class="text-xs text-cream/50 font-mono">2025</span>
+                        </div>
+
+                        <div class="relative z-20 my-auto text-center">
+                            <button class="w-16 h-16 rounded-full bg-champagne text-darkBg flex items-center justify-center mx-auto mb-4 transition-transform duration-500 group-hover:scale-110 shadow-glow play-sim-btn" data-title="Ethereal Echoes">
+                                <i class="ri-play-fill text-2xl ml-1"></i>
+                            </button>
+                            <h3 class="font-syne text-2xl font-bold text-white mb-1">Ethereal Echoes</h3>
+                            <p class="text-cream/60 text-sm">Universal Music Group UK</p>
+                        </div>
+
+                        <div class="relative z-20 flex items-center justify-between pt-6 border-t border-white/5">
+                            <div class="flex items-center gap-1 h-6">
+                                <span class="w-1 h-5 bg-champagne rounded-full animate-pulse" style="animation-delay: 0.3s;"></span>
+                                <span class="w-1 h-3 bg-champagne/60 rounded-full animate-pulse" style="animation-delay: 0.1s;"></span>
+                                <span class="w-1 h-6 bg-champagne rounded-full animate-pulse" style="animation-delay: 0.4s;"></span>
+                                <span class="w-1 h-4 bg-champagne/80 rounded-full animate-pulse" style="animation-delay: 0.2s;"></span>
+                                <span class="w-1 h-5 bg-champagne rounded-full animate-pulse" style="animation-delay: 0.5s;"></span>
+                            </div>
+                            <span class="text-xs text-champagne uppercase tracking-widest font-mono">04:12</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 -->
+                <div class="double-shell group">
+                    <div class="double-core flex flex-col justify-between h-[360px] relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-transparent to-transparent opacity-60 z-10"></div>
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(197,168,128,0.15),transparent_50%)]"></div>
+
+                        <div class="relative z-20 flex items-center justify-between">
+                            <span class="text-xs uppercase tracking-[0.2em] text-champagne">Global Kurumsal Kampanya</span>
+                            <span class="text-xs text-cream/50 font-mono">2026</span>
+                        </div>
+
+                        <div class="relative z-20 my-auto text-center">
+                            <button class="w-16 h-16 rounded-full bg-champagne text-darkBg flex items-center justify-center mx-auto mb-4 transition-transform duration-500 group-hover:scale-110 shadow-glow play-sim-btn" data-title="Sonic Architecture Jingle">
+                                <i class="ri-play-fill text-2xl ml-1"></i>
+                            </button>
+                            <h3 class="font-syne text-2xl font-bold text-white mb-1">Sonic Architecture</h3>
+                            <p class="text-cream/60 text-sm">Mercedes-Benz Global Ses Kimliği</p>
+                        </div>
+
+                        <div class="relative z-20 flex items-center justify-between pt-6 border-t border-white/5">
+                            <div class="flex items-center gap-1 h-6">
+                                <span class="w-1 h-2 bg-champagne/40 rounded-full animate-pulse" style="animation-delay: 0.2s;"></span>
+                                <span class="w-1 h-6 bg-champagne rounded-full animate-pulse" style="animation-delay: 0.4s;"></span>
+                                <span class="w-1 h-5 bg-champagne/80 rounded-full animate-pulse" style="animation-delay: 0.1s;"></span>
+                                <span class="w-1 h-3 bg-champagne/60 rounded-full animate-pulse" style="animation-delay: 0.3s;"></span>
+                                <span class="w-1 h-6 bg-champagne rounded-full animate-pulse" style="animation-delay: 0.5s;"></span>
+                            </div>
+                            <span class="text-xs text-champagne uppercase tracking-widest font-mono">01:30</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- İLETİŞİM & REZERVASYON FORMU -->
+    <section id="iletisim" class="py-32 px-6 relative border-t border-borderSubtle">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                <!-- Left Info -->
+                <div class="lg:col-span-5">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/10 mb-6">
+                        <span class="text-[10px] uppercase tracking-[0.2em] text-champagne">İletişim & Randevu</span>
+                    </div>
+                    <h2 class="font-syne text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">
+                        Yeni Projenizi Hayata Geçirelim.
+                    </h2>
+                    <p class="text-cream/70 text-base leading-relaxed mb-12">
+                        Stüdyo rezervasyonları, proje teklifleri ve teknik iş birlikleri için bizimle iletişime geçin. Uzman ekibimiz en kısa sürede size dönecektir.
+                    </p>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-full border border-white/10 bg-darkCard flex items-center justify-center text-champagne shrink-0">
+                                <i class="ri-map-pin-line text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold text-sm mb-1">Stüdyo Konumu</h4>
+                                <p class="text-cream/60 text-sm">Levent Loft, Büyükdere Cad. No:201 Beşiktaş / İstanbul</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-full border border-white/10 bg-darkCard flex items-center justify-center text-champagne shrink-0">
+                                <i class="ri-mail-line text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold text-sm mb-1">E-Posta Adresi</h4>
+                                <p class="text-cream/60 text-sm">concierge@aetheriasound.com</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-full border border-white/10 bg-darkCard flex items-center justify-center text-champagne shrink-0">
+                                <i class="ri-phone-line text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold text-sm mb-1">Telefon & WhatsApp</h4>
+                                <p class="text-cream/60 text-sm">+90 (212) 555 0198</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Form -->
+                <div class="lg:col-span-7">
+                    <div class="double-shell">
+                        <div class="double-core">
+                            <form id="contactForm" class="space-y-6">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-xs uppercase tracking-[0.2em] text-cream/70 mb-2 font-medium">Adınız Soyadınız</label>
+                                        <input type="text" required class="w-full bg-darkBg border border-white/10 rounded-xl px-5 py-4 text-white text-sm focus:outline-none focus:border-champagne transition-colors" placeholder="Ahmet Yılmaz">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs uppercase tracking-[0.2em] text-cream/70 mb-2 font-medium">E-Posta Adresiniz</label>
+                                        <input type="email" required class="w-full bg-darkBg border border-white/10 rounded-xl px-5 py-4 text-white text-sm focus:outline-none focus:border-champagne transition-colors" placeholder="ahmet@example.com">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs uppercase tracking-[0.2em] text-cream/70 mb-2 font-medium">Hizmet Türü</label>
+                                    <select class="w-full bg-darkBg border border-white/10 rounded-xl px-5 py-4 text-white text-sm focus:outline-none focus:border-champagne transition-colors">
+                                        <option value="production">Müzik Prodüksiyonu & Aranje</option>
+                                        <option value="mix">Mix & Mastering (Dolby Atmos & Stereo)</option>
+                                        <option value="sounddesign">Ses Tasarımı & Foly</option>
+                                        <option value="vocal">Vokal Edit & Tuning</option>
+                                        <option value="corporate">Reklam & Kurumsal Ses Kimliği</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs uppercase tracking-[0.2em] text-cream/70 mb-2 font-medium">Proje Detayları</label>
+                                    <textarea rows="4" required class="w-full bg-darkBg border border-white/10 rounded-xl px-5 py-4 text-white text-sm focus:outline-none focus:border-champagne transition-colors resize-none" placeholder="Projenizden kısaca bahsedin ve beklentilerinizi paylaşın..."></textarea>
+                                </div>
+
+                                <button type="submit" class="w-full group inline-flex items-center justify-center gap-4 py-4 rounded-full bg-champagne text-darkBg font-semibold text-xs uppercase tracking-[0.2em] transition-all duration-500 hover:bg-champagneLight shadow-glow">
+                                    <span>Mesaj Gönder / Fiyat Teklifi Al</span>
+                                    <div class="w-7 h-7 rounded-full bg-darkBg/10 flex items-center justify-center transition-transform duration-500 group-hover:translate-x-1">
+                                        <i class="ri-arrow-right-up-line text-sm"></i>
+                                    </div>
+                                </button>
+
+                                <div id="formSuccess" class="hidden text-center text-champagne text-sm font-medium pt-2">
+                                    Teşekkürler! Mesajınız başarıyla iletildi. En kısa sürede sizinle iletişime geçeceğiz.
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-16 px-6 border-t border-borderSubtle bg-darkCard">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            <!-- Brand Column -->
+            <div class="md:col-span-1">
+                <a href="#" class="flex items-center gap-3 mb-6">
+                    <div class="w-8 h-8 rounded-full border border-champagne/40 flex items-center justify-center bg-darkBg">
+                        <span class="w-2.5 h-2.5 rounded-full bg-champagne"></span>
+                    </div>
+                    <span class="font-syne font-bold text-lg tracking-[0.2em] text-white">ALPH STUDIO</span>
+                </a>
+                <p class="text-cream/60 text-sm leading-relaxed mb-6">
+                    Uluslararası akustik standartlarında profesyonel müzik ve ses prodüksiyon stüdyosu.
+                </p>
+                <div class="flex items-center gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full border border-white/10 bg-darkBg flex items-center justify-center text-cream/70 hover:text-champagne hover:border-champagne/40 transition-colors">
+                        <i class="ri-spotify-fill text-lg"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full border border-white/10 bg-darkBg flex items-center justify-center text-cream/70 hover:text-champagne hover:border-champagne/40 transition-colors">
+                        <i class="ri-instagram-line text-lg"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full border border-white/10 bg-darkBg flex items-center justify-center text-cream/70 hover:text-champagne hover:border-champagne/40 transition-colors">
+                        <i class="ri-youtube-fill text-lg"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Links 1 -->
+            <div>
+                <h4 class="text-white font-syne font-semibold text-sm uppercase tracking-[0.2em] mb-6">Hızlı Bağlantılar</h4>
+                <ul class="space-y-3 text-sm">
+                    <li><a href="#hakkimizda" class="text-cream/60 hover:text-champagne transition-colors">Hakkımızda</a></li>
+                    <li><a href="#hizmetler" class="text-cream/60 hover:text-champagne transition-colors">Hizmetler</a></li>
+                    <li><a href="#ekipmanlar" class="text-cream/60 hover:text-champagne transition-colors">Teknik Ekipmanlar</a></li>
+                    <li><a href="#referanslar" class="text-cream/60 hover:text-champagne transition-colors">Referanslar</a></li>
+                    <li><a href="#iletisim" class="text-cream/60 hover:text-champagne transition-colors">İletişim</a></li>
+                </ul>
+            </div>
+
+            <!-- Links 2 -->
+            <div>
+                <h4 class="text-white font-syne font-semibold text-sm uppercase tracking-[0.2em] mb-6">Hizmetlerimiz</h4>
+                <ul class="space-y-3 text-sm">
+                    <li><a href="#hizmetler" class="text-cream/60 hover:text-champagne transition-colors">Müzik Prodüksiyonu</a></li>
+                    <li><a href="#hizmetler" class="text-cream/60 hover:text-champagne transition-colors">Mix & Mastering</a></li>
+                    <li><a href="#hizmetler" class="text-cream/60 hover:text-champagne transition-colors">Ses Tasarımı & Foly</a></li>
+                    <li><a href="#hizmetler" class="text-cream/60 hover:text-champagne transition-colors">Vokal Edit & Tuning</a></li>
+                    <li><a href="#hizmetler" class="text-cream/60 hover:text-champagne transition-colors">Kurumsal Ses Kimliği</a></li>
+                </ul>
+            </div>
+
+            <!-- Legal / Info -->
+            <div>
+                <h4 class="text-white font-syne font-semibold text-sm uppercase tracking-[0.2em] mb-6">Yasal & Gizlilik</h4>
+                <ul class="space-y-3 text-sm">
+                    <li><a href="#" class="text-cream/60 hover:text-champagne transition-colors">Gizlilik Politikası</a></li>
+                    <li><a href="#" class="text-cream/60 hover:text-champagne transition-colors">Kullanım Koşulları</a></li>
+                    <li><a href="#" class="text-cream/60 hover:text-champagne transition-colors">KVKK Aydınlatma Metni</a></li>
+                    <li><a href="#" class="text-cream/60 hover:text-champagne transition-colors">Çerez Tercihleri</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-cream/50">
+            <p>© 2026 Alph Studio. Tüm hakları saklıdır.</p>
+            <p class="mt-4 sm:mt-0">Awwwards / FWA Nominated Minimalist Luxury Agency Experience</p>
+        </div>
+    </footer>
+
+    <!-- Lenis Smooth Scroll JS -->
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <!-- GSAP CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <script>
+        // Initialize Lenis Smooth Scroll
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            smooth: true,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // GSAP ScrollTrigger Integration
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Ensure proper triggers for elements that might be hidden
+        const revealElements = document.querySelectorAll('.double-shell, h2, p, .service-item, .gear-panel');
+
+        revealElements.forEach(el => {
+            gsap.set(el, { autoAlpha: 0, y: 50 });
+            ScrollTrigger.create({
+                trigger: el,
+                start: 'top 85%',
+                onEnter: () => {
+                    gsap.to(el, { autoAlpha: 1, y: 0, duration: 1, ease: 'power3.out' });
+                },
+                once: true
+            });
+        });
+
+        // Refresh ScrollTrigger after content load
+        window.addEventListener('load', () => {
+            ScrollTrigger.refresh();
+        });
+
+        // Hero Audio Canvas Visualizer
+        const canvas = document.getElementById('heroCanvas');
+        const ctx = canvas.getContext('2d');
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        let wavePhase = 0;
+        function drawVisualizer() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.beginPath();
+            ctx.lineWidth = 1.5;
+            ctx.strokeStyle = 'rgba(197, 168, 128, 0.25)';
+
+            const centerY = canvas.height * 0.65;
+            const points = 120;
+            const slice = canvas.width / points;
+
+            for (let i = 0; i <= points; i++) {
+                const x = i * slice;
+                const distanceCenter = Math.abs(i - points / 2) / (points / 2);
+                const factor = Math.max(0, 1 - distanceCenter);
+                const y = centerY + Math.sin(i * 0.1 + wavePhase) * Math.cos(i * 0.05 + wavePhase * 0.5) * 60 * factor;
+
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+            wavePhase += 0.025;
+            requestAnimationFrame(drawVisualizer);
+        }
+        drawVisualizer();
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        let isMenuOpen = false;
+        menuToggle.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+                mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
+                menuIcon.className = 'ri-close-line';
+                document.body.style.overflow = 'hidden';
+            } else {
+                mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+                mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+                menuIcon.className = 'ri-menu-3-line';
+                document.body.style.overflow = '';
+            }
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                isMenuOpen = false;
+                mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+                mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+                menuIcon.className = 'ri-menu-3-line';
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Accordion for Services
+        const serviceItems = document.querySelectorAll('.service-item');
+        serviceItems.forEach(item => {
+            const btn = item.querySelector('.service-btn');
+            const content = item.querySelector('.service-content');
+            const icon = item.querySelector('.service-icon');
+
+            btn.addEventListener('click', () => {
+                const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
+
+                // Close all
+                serviceItems.forEach(other => {
+                    other.querySelector('.service-content').style.maxHeight = '0px';
+                    other.querySelector('.service-icon').style.transform = 'rotate(0deg)';
+                    other.classList.remove('border-champagne');
+                });
+
+                if (!isOpen) {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    icon.style.transform = 'rotate(45deg)';
+                    item.classList.add('border-champagne');
+                }
+            });
+        });
+
+        // Open first service by default
+        if (serviceItems.length > 0) {
+            const firstContent = serviceItems[0].querySelector('.service-content');
+            const firstIcon = serviceItems[0].querySelector('.service-icon');
+            firstContent.style.maxHeight = firstContent.scrollHeight + 'px';
+            firstIcon.style.transform = 'rotate(45deg)';
+            serviceItems[0].classList.add('border-champagne');
+        }
+
+        // Tabs for Equipment
+        const gearTabs = document.querySelectorAll('.gear-tab');
+        const gearPanels = document.querySelectorAll('.gear-panel');
+
+        gearTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.getAttribute('data-target');
+
+                gearTabs.forEach(t => {
+                    t.classList.remove('bg-champagne', 'text-darkBg');
+                    t.classList.add('bg-darkCard', 'text-cream/70', 'border', 'border-white/10');
+                });
+                tab.classList.remove('bg-darkCard', 'text-cream/70', 'border', 'border-white/10');
+                tab.classList.add('bg-champagne', 'text-darkBg');
+
+                gearPanels.forEach(panel => {
+                    if (panel.id === target) {
+                        panel.classList.remove('hidden');
+                        gsap.from(panel.children, { y: 20, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out' });
+                    } else {
+                        panel.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // Play Simulation Buttons
+        const playBtns = document.querySelectorAll('.play-sim-btn');
+        playBtns.forEach(btn => {
+            let isPlaying = false;
+            btn.addEventListener('click', () => {
+                isPlaying = !isPlaying;
+                const icon = btn.querySelector('i');
+                if (isPlaying) {
+                    icon.className = 'ri-pause-fill text-2xl';
+                    btn.classList.add('scale-110');
+                } else {
+                    icon.className = 'ri-play-fill text-2xl ml-1';
+                    btn.classList.remove('scale-110');
+                }
+            });
+        });
+
+        // Contact Form Submission
+        const contactForm = document.getElementById('contactForm');
+        const formSuccess = document.getElementById('formSuccess');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            formSuccess.classList.remove('hidden');
+            contactForm.reset();
+            setTimeout(() => {
+                formSuccess.classList.add('hidden');
+            }, 6000);
+        });
+    </script>
+</body>
+</html>
